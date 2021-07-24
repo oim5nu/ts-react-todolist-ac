@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { TodoProvider } from './context/TodoContext';
+import { AbilityContext } from './context/CanContext';
+import { TodoListContainer } from './components/TodoListContainer';
+import { buildAbilityFor } from './config/ability';
+//import TodoList from './components/TodoList';
 
-function App() {
+export default function App(): JSX.Element {
+  const defaultAbility = buildAbilityFor('visitors');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoProvider>
+      <AbilityContext.Provider value={defaultAbility}>
+        <TodoListContainer />
+      </AbilityContext.Provider>
+    </TodoProvider>
   );
 }
-
-export default App;
