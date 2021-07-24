@@ -93,7 +93,7 @@ export const TodoItem = (props: Props): JSX.Element => {
           <input
             className="edit"
             type="text"
-            ref="inputRef"
+            ref={inputRef}
             value={state.editingTitle || props.todo.title}
             onBlur={doneEdit}
             onKeyUp={doneOrCancelEdit}
@@ -109,4 +109,4 @@ export const TodoItem = (props: Props): JSX.Element => {
   );
 };
 
-TodoItem.contextType = AbilityContext;
+//TodoItem.contextType = AbilityContext;

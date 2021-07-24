@@ -1,12 +1,12 @@
 import { ITodoItem, ITodoInput } from '../interface';
-import { uuid } from 'uuidv4';
+import { v4 as uuid_v4 } from 'uuid';
 const STORAGE_KEY = 'todos-react';
 
 export const buildTodo = (attrs: ITodoInput): ITodoItem => {
   return {
     ...attrs,
     type: 'Todo',
-    id: uuid(),
+    id: uuid_v4(),
     completed: false,
   };
 };

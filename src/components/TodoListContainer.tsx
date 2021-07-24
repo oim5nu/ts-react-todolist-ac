@@ -57,7 +57,6 @@ export const TodoListContainer = (): JSX.Element => {
         {ability.can('create', 'Todo') && <NewTodo />}
       </header>
       <TodoList
-        items={state.items}
         onRemove={removeTodo}
         onEdited={editTodo}
         onComplete={completeTodo}

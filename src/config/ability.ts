@@ -12,7 +12,7 @@ export const defineRulesFor = (role: string) => {
 
   if (role === 'admin') {
     can('manage', 'all');
-  } else if (role === 'member') {
+  } else if (role === 'user') {
     can(['read', 'create'], 'Todo');
     can(['update', 'delete'], 'Todo', { assignee: 'me' });
   } else {
