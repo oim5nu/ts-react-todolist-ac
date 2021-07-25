@@ -23,7 +23,7 @@ export const TodoList = (props: Props): JSX.Element => {
   //const deleteHandler = (id: string) => dispatch(deleteTodo(id));
 
   return todos.length > 0 ? (
-    <ul className="container" style={ulStyles}>
+    <ul className="todo-list" style={ulStyles}>
       {todos.map((todo) => (
         <TodoItem key={todo.id} todo={todo} {...props} />
       ))}

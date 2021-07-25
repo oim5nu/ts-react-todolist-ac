@@ -2,7 +2,8 @@ import React from 'react';
 
 export type ITodoAction =
   | { type: 'ADD'; payload: ITodoItem }
-  | { type: 'DELETE'; payload: string };
+  | { type: 'DELETE'; payload: string }
+  | { type: 'UPDATE'; payload: ITodoItem };
 
 export interface ITodoItem {
   id: string;
@@ -12,9 +13,7 @@ export interface ITodoItem {
   completed: boolean;
 }
 
-export type ITodoInput = Pick<ITodoItem, 'title' | 'assignee'> & {
-  completed: boolean;
-};
+export type ITodoAddInput = Pick<ITodoItem, 'title' | 'assignee'>;
 
 export interface ITodoState {
   todos: ITodoItem[];

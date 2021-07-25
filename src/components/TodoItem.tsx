@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { AbilityContext } from '../context/CanContext';
 import { useAbility } from '@casl/react';
+import { useTodo } from '../context/TodoContext';
+import { updateTodo, deleteTodo } from '../actions/TodoActions';
 import { ITodoItem } from '../interface';
 
 export interface Props {
@@ -12,6 +14,7 @@ export interface Props {
 
 //type State = Readonly<{ isEditing: boolean; editingTitle: string }>;
 export const TodoItem = (props: Props): JSX.Element => {
+  const { state: contextState, dispatch } = useTodo();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const ability = useAbility(AbilityContext);
@@ -37,7 +40,9 @@ export const TodoItem = (props: Props): JSX.Element => {
   };
 
   const editTodo = () => {
-    if (!ability.can('update', props.todo)) return;
+    const canUpdateTodo = ability.can('update', props.todo);
+    console.log('canUpdateTodo', canUpdateTodo);
+    if (!canUpdateTodo) return;
 
     setState((prev) => ({ ...prev, isEditing: true }));
     inputRef.current?.focus();
@@ -62,26 +67,34 @@ export const TodoItem = (props: Props): JSX.Element => {
 
   const doneOrCancelEdit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      console.log('Done Edit');
       doneEdit();
-    } else if (e.key === 'Escape') {
+      console.log('Cancel Edit');
       cancelEdit();
     }
   };
   const updateTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('updateTitle');
     setState((prev) => ({ ...prev, editingTitle: e.target.value }));
   };
   const removeTodo = () => {
-    props.onRemove(props.todo);
+    console.log('click removeTodo');
+    //props.onRemove(props.todo);
+    dispatch(deleteTodo(props.todo.id));
   };
-
+  debugger;
+  const canUpdateTodo = ability.can('update', 'Todo');
+  console.log('canUpdateTodo', canUpdateTodo);
+  const canDeleteTodo = ability.can('delete', 'Todo');
+  console.log('canDeleteTodo', canDeleteTodo);
+  const canManageTodo = ability.can('manage', 'Todo');
+  console.log('canManageTodo', canManageTodo);
   return (
     <>
-      <li className={`row ${getClassName()}`}>
-        {/* <div className="view">
-          <label onDoubleClick={editTodo}>{props.todo.title}</label>
-        </div> */}
-        <label className="four columns" onDoubleClick={editTodo}>
-          {ability.can('update', 'Todo') && (
+      <li className={getClassName()}>
+        {/* Checkbox & label*/}
+        <label onDoubleClick={editTodo}>
+          {canUpdateTodo && (
             <input
               type="checkbox"
               checked={props.todo.completed}
@@ -89,12 +102,26 @@ export const TodoItem = (props: Props): JSX.Element => {
               className="toggle"
             />
           )}
-          <span className="label-body">{props.todo.title}</span>
+          <span
+            style={{
+              display: 'inline-block',
+              paddingLeft: '20px',
+              width: '300px',
+            }}
+          >
+            {props.todo.title}
+          </span>
         </label>
-            {/* Editing Input*/}
-        {ability.can('update', 'Todo') && (
-          <span >
+        {/* Hidden Input*/}
+        {canUpdateTodo && (
+          <div>
             <input
+              style={{
+                display: 'none',
+                fontSize: '16pt',
+                marginLeft: '-300px',
+                width: '300px',
+              }}
               className="edit"
               type="text"
               ref={inputRef}
@@ -103,11 +130,17 @@ export const TodoItem = (props: Props): JSX.Element => {
               onKeyUp={doneOrCancelEdit}
               onChange={updateTitle}
             />
-          </span>
+          </div>
         )}
         <div className="assignee">{props.todo.assignee}</div>
-        {ability.can('delete', 'Todo') && (
-          <button className="destroy" onClick={removeTodo}></button>
+        {canDeleteTodo && (
+          <button
+            style={{ fontSize: '16pt' }}
+            className="btn"
+            onClick={removeTodo}
+          >
+            X
+          </button>
         )}
       </li>
     </>

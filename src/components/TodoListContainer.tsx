@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { buildTodo, saveTodo, fetchTodo } from '../services/todo-storage';
-//import NewTodo from './NewTodo';
+import { TodoHeader } from './TodoHeader';
 import { TodoList } from './TodoList';
 import { ITodoItem } from '../interface';
 import { AbilityContext } from '../context/CanContext';
@@ -50,11 +50,13 @@ export const TodoListContainer = (): JSX.Element => {
     });
   };
 
+  const canCreateTodo = ability.can('create', 'Todo');
   return (
-    <main>
-      <header className="container">
-        {ability.can('create', 'Todo') && <NewTodo />}
-      </header>
+    <main style={{ marginTop: '6vw' }}>
+      <div className="container">
+        <TodoHeader />
+        {canCreateTodo && <NewTodo />}
+      </div>
       <TodoList
         onRemove={removeTodo}
         onEdited={editTodo}

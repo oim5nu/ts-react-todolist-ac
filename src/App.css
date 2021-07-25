@@ -1,11 +1,53 @@
 .new-todo {
   display: flex;
+  height: 4vw;
 }
 
 .new-todo [name='title'] {
   flex: 1;
+  padding-left: 4vw;
 }
 
 .new-todo [name='assignee'] {
   flex: 0 0 auto;
+  padding-left: 1vw;
+}
+
+.todo-list li {
+  position: relative;
+  font-size: 24px;
+  border-bottom: 1px solid #ededed;
+  display: flex;
+  align-items: center;
+}
+
+.help {
+  cursor: help;
+}
+
+.roles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  top: 2vw;
+}
+.roles li {
+  display: inline;
+}
+.roles li button {
+  color: inherit;
+  margin: 3px;
+  padding: 3px 7px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+}
+.roles li button:hover {
+  border-color: rgba(175, 47, 47, 0.1);
+}
+.roles li button.selected {
+  border-color: rgba(175, 47, 47, 0.2);
 }

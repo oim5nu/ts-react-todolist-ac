@@ -1,8 +1,8 @@
-import { ITodoItem, ITodoInput } from '../interface';
+import { ITodoItem, ITodoAddInput } from '../interface';
 import { v4 as uuid_v4 } from 'uuid';
 const STORAGE_KEY = 'todos-react';
 
-export const buildTodo = (attrs: ITodoInput): ITodoItem => {
+export const buildTodo = (attrs: ITodoAddInput): ITodoItem => {
   return {
     ...attrs,
     type: 'Todo',

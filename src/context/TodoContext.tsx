@@ -13,6 +13,20 @@ const reducer = (state: ITodoState, action: ITodoAction): ITodoState => {
         todos: [...state.todos, action.payload],
       };
 
+    case 'UPDATE': {
+      const index = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+
+      return {
+        ...state,
+        todos: [
+          ...state.todos.slice(0, index),
+          { ...action.payload },
+          ...state.todos.slice(index, state.todos.length),
+        ],
+      };
+    }
     case 'DELETE':
       return {
         ...state,

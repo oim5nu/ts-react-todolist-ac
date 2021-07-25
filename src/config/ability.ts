@@ -12,12 +12,9 @@ export const defineRulesFor = (role: string) => {
 
   if (role === 'admin') {
     can('manage', 'all');
-  } else if (role === 'user') {
+  } else {
     can(['read', 'create'], 'Todo');
     can(['update', 'delete'], 'Todo', { assignee: 'me' });
-  } else {
-    // visitor
-    can(['read'], 'Todo');
   }
 
   return rules;
