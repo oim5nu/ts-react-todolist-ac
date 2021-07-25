@@ -76,29 +76,34 @@ export const TodoItem = (props: Props): JSX.Element => {
 
   return (
     <>
-      <li className={getClassName()}>
-        {ability.can('update', 'Todo') && (
-          <input
-            type="checkbox"
-            checked={props.todo.completed}
-            onChange={completeTodo}
-            className="toggle"
-          />
-        )}
-        <div className="view">
+      <li className={`row ${getClassName()}`}>
+        {/* <div className="view">
           <label onDoubleClick={editTodo}>{props.todo.title}</label>
-        </div>
-
+        </div> */}
+        <label className="four columns" onDoubleClick={editTodo}>
+          {ability.can('update', 'Todo') && (
+            <input
+              type="checkbox"
+              checked={props.todo.completed}
+              onChange={completeTodo}
+              className="toggle"
+            />
+          )}
+          <span className="label-body">{props.todo.title}</span>
+        </label>
+            {/* Editing Input*/}
         {ability.can('update', 'Todo') && (
-          <input
-            className="edit"
-            type="text"
-            ref={inputRef}
-            value={state.editingTitle || props.todo.title}
-            onBlur={doneEdit}
-            onKeyUp={doneOrCancelEdit}
-            onChange={updateTitle}
-          />
+          <span >
+            <input
+              className="edit"
+              type="text"
+              ref={inputRef}
+              value={state.editingTitle || props.todo.title}
+              onBlur={doneEdit}
+              onKeyUp={doneOrCancelEdit}
+              onChange={updateTitle}
+            />
+          </span>
         )}
         <div className="assignee">{props.todo.assignee}</div>
         {ability.can('delete', 'Todo') && (

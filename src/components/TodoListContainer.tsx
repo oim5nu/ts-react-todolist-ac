@@ -9,7 +9,6 @@ import { NewTodo } from './newTodo';
 
 export const TodoListContainer = (): JSX.Element => {
   const [state, setState] = useState({ items: fetchTodo() });
-  console.log('AbilityContext', AbilityContext);
   const ability = useAbility(AbilityContext);
   useEffect(() => {
     saveTodo(state.items);
@@ -52,8 +51,8 @@ export const TodoListContainer = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <header className="header">
+    <main>
+      <header className="container">
         {ability.can('create', 'Todo') && <NewTodo />}
       </header>
       <TodoList
@@ -61,6 +60,6 @@ export const TodoListContainer = (): JSX.Element => {
         onEdited={editTodo}
         onComplete={completeTodo}
       />
-    </div>
+    </main>
   );
 };

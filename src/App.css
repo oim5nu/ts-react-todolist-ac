@@ -1,0 +1,11 @@
+.new-todo {
+  display: flex;
+}
+
+.new-todo [name='title'] {
+  flex: 1;
+}
+
+.new-todo [name='assignee'] {
+  flex: 0 0 auto;
+}
